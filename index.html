@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ScheduleAI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:#050816;
+      overflow-x:hidden;
+      color:white;
+    }
+
+    .gradient-text{
+      background:linear-gradient(90deg,#7C3AED,#60A5FA,#A855F7);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero-glow{
+      position:absolute;
+      width:700px;
+      height:700px;
+      background:radial-gradient(circle,#7c3aed44 0%,transparent 70%);
+      filter:blur(80px);
+      z-index:0;
+      animation:float 6s ease-in-out infinite;
+    }
+
+    .hero-glow-2{
+      position:absolute;
+      right:-200px;
+      top:100px;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,#2563eb44 0%,transparent 70%);
+      filter:blur(100px);
+      animation:float2 8s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%,100%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-30px);
+      }
+    }
+
+    @keyframes float2{
+      0%,100%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(40px);
+      }
+    }
+
+    .glass{
+      background:rgba(255,255,255,.05);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .phone{
+      animation:phoneFloat 5s ease-in-out infinite;
+      box-shadow:
+      0 0 80px rgba(124,58,237,.4),
+      0 0 120px rgba(59,130,246,.2);
+    }
+
+    @keyframes phoneFloat{
+      0%,100%{
+        transform:translateY(0px) rotate(-5deg);
+      }
+      50%{
+        transform:translateY(-25px) rotate(-2deg);
+      }
+    }
+
+    .fade-up{
+      opacity:0;
+      transform:translateY(50px);
+      transition:all 1s ease;
+    }
+
+    .fade-up.active{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .card-hover{
+      transition:0.4s ease;
+    }
+
+    .card-hover:hover{
+      transform:translateY(-10px);
+      border-color:#7c3aed;
+      box-shadow:0 0 40px rgba(124,58,237,.3);
+    }
+
+    .btn-main{
+      background:linear-gradient(90deg,#7c3aed,#3b82f6);
+      transition:0.3s ease;
+    }
+
+    .btn-main:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 30px rgba(124,58,237,.6);
+    }
+
+    .grid-bg{
+      background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:40px 40px;
+    }
+
+    .blob{
+      position:absolute;
+      border-radius:999px;
+      filter:blur(100px);
+      opacity:.4;
+    }
+
+    .blob1{
+      width:300px;
+      height:300px;
+      background:#7c3aed;
+      top:0;
+      left:-100px;
+    }
+
+    .blob2{
+      width:300px;
+      height:300px;
+      background:#2563eb;
+      bottom:0;
+      right:-100px;
+    }
+
+    .nav-blur{
+      backdrop-filter:blur(20px);
+      background:rgba(5,8,22,.7);
+    }
+
+    @media(max-width:900px){
+
+      .hero-mobile{
+        flex-direction:column;
+        text-align:center;
+      }
+
+      .hero-mobile img{
+        width:280px !important;
+      }
+
+      .hero-buttons{
+        justify-content:center;
+      }
+
+      .mobile-hidden{
+        display:none;
+      }
+    }
+  </style>
+</head>
+
+<body class="grid-bg">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full z-50 nav-blur border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <div class="flex items-center gap-3">
+        <img src="scheduleai-logo.jpg" class="w-10 h-10 rounded-xl"/>
+        <h1 class="text-2xl font-bold">Schedule<span class="gradient-text">AI</span></h1>
+      </div>
+
+      <div class="hidden md:flex items-center gap-10 text-white/70">
+        <a href="#features" class="hover:text-white transition">Funciones</a>
+        <a href="#how" class="hover:text-white transition">Cómo funciona</a>
+        <a href="#ai" class="hover:text-white transition">IA</a>
+
+      </div>
+
+      <a href="https://scheduleai-dxyd.onrender.com/" target="_blank"
+      class="btn-main px-6 py-3 rounded-2xl font-semibold">
+        Probar ahora
+      </a>
+
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex items-center relative overflow-hidden pt-24">
+
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+
+      <div class="flex items-center justify-between gap-20 hero-mobile">
+
+        <!-- TEXT -->
+        <div class="max-w-2xl fade-up">
+
+          <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full glass mb-8">
+            ✨ Tu asistente académico inteligente
+          </div>
+
+          <h1 class="text-6xl md:text-7xl font-black leading-tight mb-8">
+            Tu horario.<br/>
+            Tus tareas.<br/>
+            <span class="gradient-text">
+              Tu IA personal.
+            </span>
+          </h1>
+
+          <p class="text-white/70 text-xl leading-relaxed mb-10">
+            ScheduleAI organiza automáticamente tu vida académica,
+            recuerda tus clases, tareas y te ayuda con inteligencia artificial.
+          </p>
+
+          <div class="flex gap-5 hero-buttons flex-wrap">
+
+            <a href="https://scheduleai-dxyd.onrender.com/"
+            target="_blank"
+            class="btn-main px-8 py-4 rounded-2xl text-lg font-bold">
+              🚀 Probar ahora
+            </a>
+
+            <a href="#features"
+            class="glass px-8 py-4 rounded-2xl text-lg font-semibold hover:scale-105 transition">
+              ▶ Ver más
+            </a>
+
+          </div>
+
+          <div class="mt-12 flex items-center gap-5">
+            <div class="flex -space-x-4">
+              <img src="https://i.pravatar.cc/50?img=1" class="w-12 h-12 rounded-full border-2 border-black"/>
+              <img src="https://i.pravatar.cc/50?img=2" class="w-12 h-12 rounded-full border-2 border-black"/>
+              <img src="https://i.pravatar.cc/50?img=3" class="w-12 h-12 rounded-full border-2 border-black"/>
+            </div>
+
+            <div>
+              <div class="font-bold">+10.000 estudiantes</div>
+              <div class="text-white/60 text-sm">
+                organizan su universidad con ScheduleAI
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PHONE -->
+        <div class="relative fade-up">
+
+          <div class="blob blob1"></div>
+          <div class="blob blob2"></div>
+
+          <img
+          src="239b011c-a88f-45fc-8db6-84a216222070.JPG"
+          class="w-[420px] rounded-[45px] phone relative z-10 border border-white/10"
+          />
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="py-32 relative">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center mb-20 fade-up">
+        <h2 class="text-5xl font-black mb-6">
+          Todo en <span class="gradient-text">un solo lugar</span>
+        </h2>
+
+        <p class="text-white/60 text-xl">
+          Organiza tu universidad automáticamente
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="glass rounded-3xl p-10 card-hover fade-up">
+          <div class="text-5xl mb-6">📅</div>
+          <h3 class="text-2xl font-bold mb-4">
+            Horario Inteligente
+          </h3>
+
+          <p class="text-white/60 leading-relaxed">
+            La IA organiza automáticamente tus clases,
+            materias y horarios semanales.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-10 card-hover fade-up">
+          <div class="text-5xl mb-6">🔔</div>
+          <h3 class="text-2xl font-bold mb-4">
+            Recordatorios
+          </h3>
+
+          <p class="text-white/60 leading-relaxed">
+            Recibe notificaciones antes de tus clases,
+            tareas y entregas importantes.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-10 card-hover fade-up">
+          <div class="text-5xl mb-6">🤖</div>
+          <h3 class="text-2xl font-bold mb-4">
+            IA Integrada
+          </h3>
+
+          <p class="text-white/60 leading-relaxed">
+            Pregúntale qué tienes esta semana,
+            tareas pendientes o próximas clases.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="py-32">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center mb-24 fade-up">
+        <h2 class="text-5xl font-black mb-5">
+          Así de <span class="gradient-text">fácil</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-10">
+
+        <div class="text-center fade-up">
+          <div class="w-24 h-24 rounded-full bg-purple-600/20 mx-auto mb-8 flex items-center justify-center text-4xl">
+            1
+          </div>
+
+          <h3 class="text-2xl font-bold mb-4">
+            Sube tu horario
+          </h3>
+
+          <p class="text-white/60">
+            Envía tu horario manualmente o con una foto.
+          </p>
+        </div>
+
+        <div class="text-center fade-up">
+          <div class="w-24 h-24 rounded-full bg-blue-600/20 mx-auto mb-8 flex items-center justify-center text-4xl">
+            2
+          </div>
+
+          <h3 class="text-2xl font-bold mb-4">
+            La IA organiza
+          </h3>
+
+          <p class="text-white/60">
+            Todo queda organizado automáticamente.
+          </p>
+        </div>
+
+        <div class="text-center fade-up">
+          <div class="w-24 h-24 rounded-full bg-pink-600/20 mx-auto mb-8 flex items-center justify-center text-4xl">
+            3
+          </div>
+
+          <h3 class="text-2xl font-bold mb-4">
+            Recibe alertas
+          </h3>
+
+          <p class="text-white/60">
+            Nunca olvides una clase o tarea importante.
+          </p>
+        </div>
+
+        <div class="text-center fade-up">
+          <div class="w-24 h-24 rounded-full bg-cyan-600/20 mx-auto mb-8 flex items-center justify-center text-4xl">
+            4
+          </div>
+
+          <h3 class="text-2xl font-bold mb-4">
+            Habla con la IA
+          </h3>
+
+          <p class="text-white/60">
+            Pregunta todo sobre tu semana universitaria.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- AI SECTION -->
+  <section id="ai" class="py-32 relative overflow-hidden">
+
+    <div class="absolute inset-0 bg-gradient-to-b from-purple-900/10 to-blue-900/10"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+      <div class="grid md:grid-cols-2 gap-20 items-center">
+
+        <div class="fade-up">
+          <h2 class="text-6xl font-black leading-tight mb-8">
+            Una IA que
+            <span class="gradient-text"> entiende </span>
+            tu universidad
+          </h2>
+
+          <p class="text-white/60 text-xl leading-relaxed mb-10">
+            ScheduleAI puede responder preguntas como:
+          </p>
+
+          <div class="space-y-5">
+
+            <div class="glass rounded-2xl p-5">
+              💬 “¿Qué clases tengo mañana?”
+            </div>
+
+            <div class="glass rounded-2xl p-5">
+              💬 “¿Qué tareas tengo esta semana?”
+            </div>
+
+            <div class="glass rounded-2xl p-5">
+              💬 “¿Cuándo es mi próxima clase?”
+            </div>
+
+            <div class="glass rounded-2xl p-5">
+              💬 “Organiza mi horario automáticamente”
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="fade-up flex justify-center">
+          <img
+          src="239b011c-a88f-45fc-8db6-84a216222070.JPG"
+          class="w-[350px] rounded-[40px] phone"
+          />
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+  <section class="py-32">
+
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="glass rounded-[40px] p-16 text-center relative overflow-hidden">
+
+        <div class="hero-glow opacity-40"></div>
+
+        <div class="relative z-10">
+
+          <h2 class="text-6xl font-black mb-8">
+            Organiza tu universidad
+            <span class="gradient-text"> como nunca antes</span>
+          </h2>
+
+          <p class="text-white/60 text-xl mb-12">
+            ScheduleAI convierte tu vida académica
+            en algo inteligente y automático.
+          </p>
+
+          <a href="https://scheduleai-dxyd.onrender.com/"
+          target="_blank"
+          class="btn-main px-10 py-5 rounded-3xl text-xl font-bold inline-block">
+            🚀 Comenzar ahora
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/5 py-12">
+
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-10">
+
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <img src="scheduleai-logo.jpg" class="w-10 h-10 rounded-xl"/>
+          <h1 class="text-2xl font-bold">Schedule<span class="gradient-text">AI</span></h1>
+        </div>
+
+        <p class="text-white/50 max-w-md">
+          Tu asistente académico inteligente impulsado por IA.
+        </p>
+      </div>
+
+      <div class="text-white/50">
+        © 2026 ScheduleAI. Todos los derechos reservados.
+      </div>
+
+    </div>
+
+  </footer>
+
+  <!-- ANIMATION SCRIPT -->
+  <script>
+
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add("active");
+        }
+      })
+    },{
+      threshold:0.2
+    });
+
+    document.querySelectorAll(".fade-up").forEach(el=>{
+      observer.observe(el);
+    });
+
+  </script>
+
+</body>
+</html>
